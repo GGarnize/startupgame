@@ -33,9 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/start', function () {
-        return Inertia::render('Start');
-    })->middleware(['auth', 'verified'])->name('start');
+    Route::get('/start', [\App\Http\Controllers\Controller::class, 'start'])->name('start');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

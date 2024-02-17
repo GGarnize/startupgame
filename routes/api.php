@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('company', \App\Http\Controllers\CompanyController::class);
+Route::middleware('auth')->group(function () {
+    Route::apiResource('company', \App\Http\Controllers\CompanyController::class)->names('company');
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

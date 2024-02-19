@@ -4,17 +4,31 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import EmployeeComponent from '@/Components/Dialogs/EmployeeComponent';
+import {useDispatch, useSelector} from 'react-redux';
+import {resetSlice, setCompany} from '@/slices/companySlice'
 
 export default function Start({companies}: Companies) {
     const {auth} = usePage().props as any;
     const {data, setData, post, processing, errors, reset} = useForm({
         user_id: auth?.user ? auth.user.id : 0, name: '', start_date: (new Date).toISOString().split('T')[0],
     });
+    const dispatch = useDispatch()
+    const company = useSelector((state: any) => state.company.company)
     const [employeeDialogShow, setEmployeeDialogShow] = useState(false);
 
     const openDialog = () => {
         setEmployeeDialogShow(true);
     }
+
+    const handleSelectCompany = (company: Company) => {
+        resetSlice()
+        dispatch(setCompany(company))
+    }
+
+    const showTest = () => {
+        console.log(company)
+    }
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
@@ -31,10 +45,16 @@ export default function Start({companies}: Companies) {
                     </div>
 
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 bg-red-50 text-gray-900">You're logged in!</div>
-                        {companies.map((company) => (
-                            <div key={company.id}>{company.name}</div>
+                        {companies.map((company: Company, index: number) => (
+                            <div key={index}>
+                                <button onClick={() => handleSelectCompany(company)}>
+                                    {company.name}
+                                </button>
+                            </div>
                         ))}
+                    </div>
+                    <div>
+                        <button onClick={showTest}>Teste</button>
                     </div>
 
                     <form onSubmit={submit}>
@@ -59,7 +79,6 @@ export default function Start({companies}: Companies) {
                     </form>
                 </div>
                 <EmployeeComponent
-                    data={'ee'}
                     isOpen={employeeDialogShow}
                     onClose={() => setEmployeeDialogShow(false)}
                     onSubmit={(data) => console.log(data)}

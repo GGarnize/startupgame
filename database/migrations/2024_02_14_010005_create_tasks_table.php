@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->date('start_task');
             $table->integer('progress');
             $table->integer('priority');
-            $table->integer('type');
+            $table->string('type');
             $table->string('status');
             $table->timestamps();
         });

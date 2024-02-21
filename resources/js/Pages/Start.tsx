@@ -1,4 +1,4 @@
-import {Head, useForm, usePage} from '@inertiajs/react';
+import {Head, useForm, usePage, router} from '@inertiajs/react';
 import {FormEventHandler, useState} from 'react';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
@@ -13,7 +13,7 @@ export default function Start({companies}: Companies) {
         user_id: auth?.user ? auth.user.id : 0, name: '', start_date: (new Date).toISOString().split('T')[0],
     });
     const dispatch = useDispatch()
-    const company = useSelector((state: any) => state.company.company)
+    const company = useSelector((state: any) => state.company.company )
     const [employeeDialogShow, setEmployeeDialogShow] = useState(false);
 
     const openDialog = () => {
@@ -21,9 +21,15 @@ export default function Start({companies}: Companies) {
     }
 
     const handleSelectCompany = (company: Company) => {
-        resetSlice()
-        dispatch(setCompany(company))
-    }
+        resetSlice();
+        dispatch(setCompany(company));
+        if (company.id) {
+            router.get(route('start.game', company.id));
+        } else {
+            console.log('error');
+        }
+    };
+
 
     const showTest = () => {
         console.log(company)

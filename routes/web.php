@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/start', [\App\Http\Controllers\Controller::class, 'start'])->name('start');
+    Route::get('/start/{company}', [\App\Http\Controllers\Controller::class, 'startGame'])->name('start.game');
 });
 
 require __DIR__ . '/auth.php';

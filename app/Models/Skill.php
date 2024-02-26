@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Skill extends Model
 {
-    protected $fillable = ['name', 'description', 'type'];
+    protected $fillable = [
+        'name',
+        'description',
+        'type',
+        'effect'
+    ];
 
     public function employees(): BelongsToMany
     {
